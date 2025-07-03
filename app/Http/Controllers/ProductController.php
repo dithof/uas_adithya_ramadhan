@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Student;
 
 class ProductController extends Controller
 {
@@ -11,7 +12,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        // Menampilkan daftar mahasiswa
+        $students = Student::all();
+        return view('students.index', compact('students'));
     }
 
     /**
@@ -19,7 +22,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        // Menampilkan form tambah mahasiswa
+        return view('students.create');
     }
 
     /**
@@ -27,7 +31,14 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validasi dan simpan mahasiswa baru
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:students,email',
+            'address' => 'nullable|string',
+        ]);
+        Student::create($validated);
+        return redirect()->route('students.index')->with('success', 'Mahasiswa berhasil ditambahkan!');
     }
 
     /**
@@ -35,7 +46,9 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
-        //
+        // Menampilkan detail mahasiswa
+        $student = Student::findOrFail($id);
+        return view('students.show', compact('student'));
     }
 
     /**
@@ -43,7 +56,9 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        // Menampilkan form edit mahasiswa
+        $student = Student::findOrFail($id);
+        return view('students.edit', compact('student'));
     }
 
     /**
@@ -51,7 +66,15 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        // Validasi dan update mahasiswa
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:students,email,' . $id,
+            'address' => 'nullable|string',
+        ]);
+        $student = Student::findOrFail($id);
+        $student->update($validated);
+        return redirect()->route('students.index')->with('success', 'Mahasiswa berhasil diupdate!');
     }
 
     /**
@@ -59,6 +82,9 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        // Hapus mahasiswa
+        $student = Student::findOrFail($id);
+        $student->delete();
+        return redirect()->route('students.index')->with('success', 'Mahasiswa berhasil dihapus!');
     }
 }
