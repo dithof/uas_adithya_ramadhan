@@ -2,11 +2,14 @@
 
 @section('content')
 <div class="container">
-    <h1>Daftar Mahasiswa</h1>
+    <h1>Daftar Siswa</h1>
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
-    <a href="{{ route('students.create') }}" class="btn btn-primary mb-3">Tambah Mahasiswa</a>
+    @if(session('error'))
+        <div class="alert alert-danger">{{ session('error') }}</div>
+    @endif
+    <a href="{{ route('students.create') }}" class="btn btn-primary mb-3">Tambah Siswa</a>
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -14,6 +17,10 @@
                 <th>Nama</th>
                 <th>Email</th>
                 <th>Alamat</th>
+                <th>NIM</th>
+                <th>Jurusan</th>
+                <th>Tanggal Lahir</th>
+                <th>Jenis Kelamin</th>
                 <th>Aksi</th>
             </tr>
         </thead>
@@ -24,6 +31,10 @@
                     <td>{{ $student->name }}</td>
                     <td>{{ $student->email }}</td>
                     <td>{{ $student->address }}</td>
+                    <td>{{ $student->nim }}</td>
+                    <td>{{ $student->major }}</td>
+                    <td>{{ $student->birth_date }}</td>
+                    <td>{{ $student->gender }}</td>
                     <td>
                         <a href="{{ route('students.show', $student->id) }}" class="btn btn-info btn-sm">Detail</a>
                         <a href="{{ route('students.edit', $student->id) }}" class="btn btn-warning btn-sm">Edit</a>
@@ -36,7 +47,7 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="5" class="text-center">Tidak ada data mahasiswa.</td>
+                    <td colspan="9" class="text-center">Tidak ada data Siswa.</td>
                 </tr>
             @endforelse
         </tbody>
