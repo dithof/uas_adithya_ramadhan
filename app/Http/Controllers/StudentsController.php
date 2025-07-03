@@ -43,9 +43,9 @@ class StudentsController extends Controller
         ]);
         try {
             Student::create($validated);
-            return redirect()->route('students.index')->with('success', 'Student berhasil ditambahkan!');
+            return redirect()->route('students.index')->with('success', 'Siswa berhasil ditambahkan!');
         } catch (\Exception $e) {
-            return redirect()->route('students.index')->with('error', 'Gagal menambah student!');
+            return redirect()->route('students.index')->with('error', 'Gagal menambah siswa!');
         }
     }
 
@@ -87,9 +87,9 @@ class StudentsController extends Controller
         try {
             $student = Student::findOrFail($id);
             $student->update($validated);
-            return redirect()->route('students.index')->with('success', 'Student berhasil diupdate!');
+            return redirect()->route('students.index')->with('success', 'Siswa berhasil diedit!');
         } catch (\Exception $e) {
-            return redirect()->route('students.index')->with('error', 'Gagal memperbarui student!');
+            return redirect()->route('students.index')->with('error', 'Gagal memperbarui siswa!');
         }
     }
 
@@ -102,9 +102,9 @@ class StudentsController extends Controller
         try {
             $student = Student::findOrFail($id);
             $student->delete();
-            return redirect()->route('students.index')->with('success', 'Student berhasil dihapus!');
+            return redirect()->route('students.index')->with('success', 'Siswa berhasil dihapus!');
         } catch (\Exception $e) {
-            return redirect()->route('students.index')->with('error', 'Gagal menghapus student!');
+            return redirect()->route('students.index')->with('error', 'Gagal menghapus siswa!');
         }
     }
 }

@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <h1>Tambah Mahasiswa</h1>
+    <h1>Tambah Siswa</h1>
     @if ($errors->any())
         <div class="alert alert-danger">
             <ul>
